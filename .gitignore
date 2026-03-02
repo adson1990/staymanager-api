@@ -1,33 +1,66 @@
-HELP.md
+############################################
+# Maven
+############################################
 target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+!.mvn/wrapper/maven-wrapper.jar
 
-### STS ###
+############################################
+# Logs
+############################################
+*.log
+
+############################################
+# Spring Boot
+############################################
+HELP.md
+
+############################################
+# IDEs
+############################################
+
+# STS
 .apt_generated
 .classpath
 .factorypath
 .project
-.settings
+.settings/
 .springBeans
-.sts4-cache
+.sts4-cache/
 
-### IntelliJ IDEA ###
-.idea
+# IntelliJ
+.idea/
 *.iws
 *.iml
 *.ipr
 
-### NetBeans ###
-/nbproject/private/
+# VS Code
+.vscode/
+
+# NetBeans
+/nbproject/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
 build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
-### VS Code ###
-.vscode/
+############################################
+# OS
+############################################
+
+# Linux
+*~
+
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db
+
+############################################
+# Environment / Secrets
+############################################
+.env
+.env.*
+application-prod.properties
+application-local.properties
