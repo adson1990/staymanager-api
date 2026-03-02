@@ -1,0 +1,39 @@
+@baseUrl = http://localhost:8080
+@accessToken = eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJzdGF5bWFuYWdlci1hcGkiLCJzdWIiOiJhZHNvbjJAZW1haWwuY29tIiwiaWF0IjoxNzcyNDg4NjgzLCJleHAiOjE3NzI0ODk1ODMsInVpZCI6NCwicm9sZSI6IlJFQ0VQQ0FPIn0.a6qlsyw6uGkvkI7wpDtcuwcgzarEqcX6Tc6OfO267lDEKiZyUISX-UYRHkuVjGPM
+
+### Criar usuário
+POST {{baseUrl}}/api/v1/users
+Content-Type: application/json
+
+{
+  "name": "Adson",
+  "email": "adson3@email.com",
+  "password": "12345",
+  "roleID": 2
+}
+
+### Login
+POST {{baseUrl}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "adson2@email.com",
+  "password": "123456"
+}
+
+### Me sem token (Deve dar 401)
+GET {{baseUrl}}/api/v1/me
+
+### Me com token (deve dar 200)
+GET {{baseUrl}}/api/v1/me
+Authorization: Bearer {{accessToken}}
+
+### Error genérico (para testar o fallback)
+POST {{baseUrl}}/api/v1/users
+Content-Type: application/json
+
+{
+  "name": "",
+  "email": "invalido",
+  "password": "1"
+}
