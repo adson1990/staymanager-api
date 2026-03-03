@@ -1,44 +1,102 @@
-# 🚀 User Management API - Spring Security & JWT
+🚀 StayManager API — Spring Boot + JWT Authentication
 
-Este é um projeto didático focado em práticas modernas de desenvolvimento backend. O objetivo principal é implementar um sistema robusto de gerenciamento de hoteis, garantindo segurança e escalabilidade.
+Backend desenvolvido com Java e Spring Boot, focado em segurança, arquitetura limpa e boas práticas modernas para APIs REST.
 
----
+O projeto implementa autenticação stateless com JWT (Access + Refresh Token), validação robusta de dados e tratamento padronizado de exceções.
 
-## 🛠 Tecnologias e Ferramentas
+🛠 Stack Tecnológica
 
-* **Linguagem:** Java 17+
-* **Framework:** Spring Boot 3.x
-* **Segurança:** Spring Security & JWT (JSON Web Token)
-* **Persistência:** Spring Data JPA / Hibernate
-* **Banco de Dados:** PostgreSQL (ou H2 para testes)
-* **Ambiente de Dev:** Arch Linux + VS Code
-* **Controle de Versão:** Git & GitHub
+Java 17+
+Spring Boot 3.x
+Spring Security
+JWT (JSON Web Token)
+Spring Data JPA / Hibernate
+PostgreSQL
+Bean Validation (Jakarta Validation)
+Maven
+Git & GitHub
 
----
+🔐 Segurança Implementada
 
-## 💡 Funcionalidades Implementadas
+Autenticação stateless com Access Token (JWT)
+Refresh Token com rotação
+Filtro customizado para validação do Bearer Token
+Criptografia de senha com BCrypt
+Tratamento adequado de:
 
-* **Registro de Usuários:** Endpoint para criação de novos usuários com persistência segura.
-* **Autenticação Stateless:** Login via e-mail e senha retornando um token JWT assinado.
-* **Validação de Dados:** Uso de Bean Validation (@Valid) para garantir a integridade dos inputs.
-* **Tratamento de Exceções:** Handlers customizados para retornar erros de validação (FieldMessage) de forma amigável para o frontend.
-* **Segurança de Senhas:** Criptografia utilizando BCrypt.
-* **Revalidação de Tokens:** Uso de RefreshToken para gerar novo token de acesso.
+401 Unauthorized (não autenticado)
+403 Forbidden (sem permissão)
 
----
+💡 Funcionalidades Atuais
 
-## 🏗 Arquitetura e Boas Práticas
+Registro de usuários
+Login com geração de Access + Refresh Token
+Endpoint protegido por autenticação JWT
+Validação de dados com @Valid
+Tratamento global de exceções (@ControllerAdvice)
+Separação clara entre:
 
-O projeto segue os princípios de **Clean Code** e separação de responsabilidades:
+Controller
+Service
+Repository
+DTO
+Camada de Segurança
 
-* **Padrão DTO (Data Transfer Object):** Utilizado para desacoplar a API das entidades do banco de dados, aumentando a segurança.
-* **Controller -> Service -> Repository:** Fluxo lógico bem definido para facilitar a manutenção e testes.
-* **Imutabilidade:** Preferência pelo uso de objetos finais e retornos explícitos de serviços (evitando efeitos colaterais).
+🏗 Arquitetura e Boas Práticas
 
----
+O projeto segue princípios de:
 
-## 🚀 Como Executar o Projeto
+Clean Code
+Separação de responsabilidades
+Imutabilidade (uso de record para DTOs)
+Desacoplamento entre entidade e camada de transporte
+Arquitetura stateless (sem uso de sessão)
 
-1. **Clone o repositório:**
-   ```bash
-   git clone [https://github.com/adson1990/staymanager-api.git](https://github.com/adson1990/staymanager-api.git)
+Fluxo da aplicação:
+
+Request
+   ↓
+JWT Filter
+   ↓
+SecurityContext
+   ↓
+Controller
+   ↓
+Service
+   ↓
+Repository
+
+▶️ Como Executar
+
+1️⃣ Clone o projeto
+git clone https://github.com/adson1990/staymanager-api.git
+cd staymanager-api
+
+2️⃣ Configure o banco de dados
+
+Crie um banco PostgreSQL:
+
+CREATE DATABASE staymanager;
+
+Configure o application-dev.properties:
+
+spring.datasource.url=jdbc:postgresql://localhost:5432/staymanager
+spring.datasource.username=SEU_USUARIO
+spring.datasource.password=SUA_SENHA
+
+spring.jpa.hibernate.ddl-auto=update
+
+3️⃣ Execute a aplicação
+
+./mvnw spring-boot:run
+
+A API estará disponível em:
+
+http://localhost:8080
+
+📌 Próximos Passos
+
+Autorização baseada em Roles
+Dockerização
+Testes automatizados
+Deploy em ambiente cloud
