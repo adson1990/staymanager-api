@@ -1,15 +1,16 @@
 @baseUrl = http://localhost:8080
-@accessToken = eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJzdGF5bWFuYWdlci1hcGkiLCJzdWIiOiJhZHNvbjJAZW1haWwuY29tIiwiaWF0IjoxNzcyNTU0OTk4LCJleHAiOjE3NzI1NTU4OTgsInVpZCI6NCwicm9sZSI6IlJFQ0VQQ0FPIn0.RtwP2zXJpzCdTPHsxGR6Ux1UElcy4KXqfHr2_UXfWeYXlyY9sheBvheFaevVAjYe
+@accessToken = eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJzdGF5bWFuYWdlci1hcGkiLCJzdWIiOiJhZHNvbkBlbWFpbC5jb20iLCJpYXQiOjE3NzI1NjIzOTUsImV4cCI6MTc3MjU2MzI5NSwidWlkIjozLCJyb2xlIjoiUkVDRVBDQU8ifQ.d_8MJnQEho6yOnqOARC0WL3ORI_W0RI-athVGU-TJBIELW7t435EX9RFPS8Xu2Pg
+@accessTokenGerencia = eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJzdGF5bWFuYWdlci1hcGkiLCJzdWIiOiJhZHNvbjJAZW1haWwuY29tIiwiaWF0IjoxNzcyNTYyNTY1LCJleHAiOjE3NzI1NjM0NjUsInVpZCI6NSwicm9sZSI6IkdFUkVOQ0lBIn0.sMU7ARFBFSlF-rU0R2aLQ1--NSTki5Rh5RiUIjSi0ARlOaMvXb5tWT4FJ0vqaI5Z
 
 ### Criar usuário
 POST {{baseUrl}}/api/v1/users
 Content-Type: application/json
 
 {
-  "name": "Adson",
-  "email": "adson3@email.com",
-  "password": "12345",
-  "roleID": 2
+  "name": "Adson2",
+  "email": "adson2@email.com",
+  "password": "123456",
+  "role": "GERENCIA"
 }
 
 ### Login
@@ -37,3 +38,34 @@ Content-Type: application/json
   "email": "invalido",
   "password": "1"
 }
+
+### Reception (deve 200)
+GET {{baseUrl}}/api/v1/roles/reception
+Authorization: Bearer {{accessTokenGerencia}}
+
+### Management (deve 403 para RECEPCAO)
+GET {{baseUrl}}/api/v1/roles/management
+Authorization: Bearer {{accessTokenGerencia}}
+
+### Maintenance (deve 403 para RECEPCAO)
+GET {{baseUrl}}/api/v1/roles/maintenance
+Authorization: Bearer {{accessTokenGerencia}}
+
+### Criar Quarto (deve 403 para RECEPCAO)
+POST {{baseUrl}}/api/v1/rooms
+Authorization: Bearer {{accessTokenGerencia}}
+Content-Type: application/json
+
+{
+  "number": 101,
+  "floor": 1,
+  "dailyRate": 150.0
+}
+
+### listar quartos
+GET {{baseUrl}}/api/v1/rooms
+Authorization: Bearer {{accessToken}}
+
+### trocar status do quarto
+PATCH {{baseUrl}}/api/v1/rooms/1/status?status=OCCUPIED
+Authorization: Bearer {{accessTokenGerencia}}

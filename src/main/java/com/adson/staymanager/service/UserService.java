@@ -18,7 +18,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User create(User user, int roleID) {
+    public User create(User user, Role role) {
 
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
         throw new RuntimeException("Email já cadastrado");
@@ -26,22 +26,8 @@ public class UserService {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        switch (roleID) {
-            case 1:
-                user.setRole(Role.ADMIN);
-            case 2:
-                user.setRole(Role.RECEPCAO);
-            case 3:
-                user.setRole(Role.MANUTENCAO);
-            case 4:
-                user.setRole(Role.GERENCIA);
-            case 5:
-                user.setRole(Role.CLIENTE);    
-                break;
-        
-            default: user.setRole(Role.RECEPCAO);
-                break;
-        }
+        Role effectiveRole = (role == null) ? Role.CLIENTE : role;
+        user.setRole(effectiveRole);
 
         return userRepository.save(user);
     }

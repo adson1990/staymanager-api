@@ -26,7 +26,7 @@ public class UserController {
             @Valid @RequestBody UserRequestDTO requestDTO) {
 
         User user = UserMapper.toEntity(requestDTO);
-        User savedUser = userService.create(user, requestDTO.getRoleID());
+        User savedUser = userService.create(user, requestDTO.role());
         UserResponseDTO responseDTO = UserMapper.toDTO(savedUser);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);

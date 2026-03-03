@@ -9,6 +9,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -88,4 +90,49 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<StandardError> handleAccessDenied(
+            AccessDeniedException ex,
+            HttpServletRequest request) {
+
+            StandardError error = new StandardError(
+                Instant.now(),
+                HttpStatus.FORBIDDEN.value(),
+                "Acesso negado",
+                request.getRequestURI()
+         );
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<StandardError> handleAuthentication(
+            AuthenticationException ex,
+            HttpServletRequest request) {
+
+        StandardError error = new StandardError(
+                Instant.now(),
+                HttpStatus.UNAUTHORIZED.value(),
+                "Não autenticado",
+                request.getRequestURI()
+        );
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+    }  
+
+    @ExceptionHandler(BusinessRuleException.class)
+    public ResponseEntity<StandardError> handleBusinessRule(
+            BusinessRuleException ex,
+            HttpServletRequest request) {
+
+        StandardError error = new StandardError(
+                Instant.now(),
+                HttpStatus.UNPROCESSABLE_ENTITY.value(),
+                ex.getMessage(),
+                request.getRequestURI()
+    );
+
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(error);
+}
 }
