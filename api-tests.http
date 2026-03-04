@@ -1,16 +1,17 @@
 @baseUrl = http://localhost:8080
-@accessToken = eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJzdGF5bWFuYWdlci1hcGkiLCJzdWIiOiJhZHNvbkBlbWFpbC5jb20iLCJpYXQiOjE3NzI1NjIzOTUsImV4cCI6MTc3MjU2MzI5NSwidWlkIjozLCJyb2xlIjoiUkVDRVBDQU8ifQ.d_8MJnQEho6yOnqOARC0WL3ORI_W0RI-athVGU-TJBIELW7t435EX9RFPS8Xu2Pg
-@accessTokenGerencia = eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJzdGF5bWFuYWdlci1hcGkiLCJzdWIiOiJhZHNvbjJAZW1haWwuY29tIiwiaWF0IjoxNzcyNTYyNTY1LCJleHAiOjE3NzI1NjM0NjUsInVpZCI6NSwicm9sZSI6IkdFUkVOQ0lBIn0.sMU7ARFBFSlF-rU0R2aLQ1--NSTki5Rh5RiUIjSi0ARlOaMvXb5tWT4FJ0vqaI5Z
+@roomID = 1
+@accessToken = eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJzdGF5bWFuYWdlci1hcGkiLCJzdWIiOiJhZHNvbkBlbWFpbC5jb20iLCJpYXQiOjE3NzI1ODQ0MTAsImV4cCI6MTc3MjU4NTMxMCwidWlkIjozLCJyb2xlIjoiUkVDRVBDQU8ifQ.IdOmdVCZY2ZQ5zyryXpc9HwIaE_HyijpT5hRYhl6bFxhNPQ6zi9oNC234gBPUrqC
+@accessTokenGerencia = eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJzdGF5bWFuYWdlci1hcGkiLCJzdWIiOiJhZHNvbjJAZW1haWwuY29tIiwiaWF0IjoxNzcyNTg0MzgzLCJleHAiOjE3NzI1ODUyODMsInVpZCI6NSwicm9sZSI6IkdFUkVOQ0lBIn0.o6hOI6LDxY8KxRBO58kwAIMdirag8x4tr97tUlX_lAeV0TsqEBYsecR2cTt0sVbt
 
 ### Criar usuário
 POST {{baseUrl}}/api/v1/users
 Content-Type: application/json
 
 {
-  "name": "Adson2",
-  "email": "adson2@email.com",
+  "name": "Adson4",
+  "email": "adson4@email.com",
   "password": "123456",
-  "role": "GERENCIA"
+  "role": "CLIENTE"
 }
 
 ### Login
@@ -18,7 +19,7 @@ POST {{baseUrl}}/api/v1/auth/login
 Content-Type: application/json
 
 {
-  "email": "adson2@email.com",
+  "email": "adson@email.com",
   "password": "123456"
 }
 
@@ -67,5 +68,21 @@ GET {{baseUrl}}/api/v1/rooms
 Authorization: Bearer {{accessToken}}
 
 ### trocar status do quarto
-PATCH {{baseUrl}}/api/v1/rooms/1/status?status=OCCUPIED
+PATCH {{baseUrl}}/api/v1/rooms/{{roomID}}/status?status=AVAILABLE
 Authorization: Bearer {{accessTokenGerencia}}
+
+### Criando reserva
+POST {{baseUrl}}/api/v1/bookings
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "roomId": 1,
+  "guestId": 4,
+  "checkInDate": "2026-03-05",
+  "checkOutDate": "2026-03-06"
+}
+
+### Fazendo check-in
+PATCH {{baseUrl}}/api/v1/bookings/{{roomID}}/check-in
+Authorization: Bearer {{accessToken}}

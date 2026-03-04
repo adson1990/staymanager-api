@@ -6,8 +6,6 @@ import com.adson.staymanager.exception.BusinessRuleException;
 import com.adson.staymanager.exception.RoomNotFoundException;
 import com.adson.staymanager.repository.RoomRepository;
 
-import io.micrometer.common.lang.NonNull;
-
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -59,33 +57,43 @@ public class RoomService {
 
     private void validateStatusTransition(RoomStatus current, RoomStatus next) {
 
+        if (current == next) return;
+        
         switch (current) {
-
+        
             case AVAILABLE -> {
-                if (next != RoomStatus.RESERVED &&
-                    next != RoomStatus.MAINTENANCE) {
-                    throw new BusinessRuleException("Transição inválida");
+                if (next != RoomStatus.RESERVED && next != RoomStatus.MAINTENANCE) {
+                    throw invalidTransition(current, next,
+                            "De AVAILABLE você só pode mudar para RESERVED ou MAINTENANCE.");
                 }
             }
-
+        
             case RESERVED -> {
-                if (next != RoomStatus.OCCUPIED &&
-                    next != RoomStatus.AVAILABLE) {
-                    throw new BusinessRuleException("Transição inválida");
+                if (next != RoomStatus.OCCUPIED && next != RoomStatus.AVAILABLE) {
+                    throw invalidTransition(current, next,
+                            "De RESERVED você só pode mudar para OCCUPIED (check-in) ou AVAILABLE (cancelamento/liberação).");
                 }
             }
-
+        
             case OCCUPIED -> {
                 if (next != RoomStatus.AVAILABLE) {
-                    throw new BusinessRuleException("Transição inválida");
+                    throw invalidTransition(current, next,
+                            "De OCCUPIED você só pode mudar para AVAILABLE (check-out).");
                 }
             }
-
+        
             case MAINTENANCE -> {
                 if (next != RoomStatus.AVAILABLE) {
-                    throw new BusinessRuleException("Transição inválida");
+                    throw invalidTransition(current, next,
+                            "De MAINTENANCE você só pode mudar para AVAILABLE (manutenção finalizada).");
                 }
             }
         }
+    }
+
+    private BusinessRuleException invalidTransition(RoomStatus current, RoomStatus next, String hint) {
+        return new BusinessRuleException(
+            "Transição de status não permitida: " + current + " -> " + next + ". " + hint
+        );
     }
 }
