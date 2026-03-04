@@ -19,7 +19,7 @@ public class Booking {
     private Long id;
 
     @ManyToOne(optional = false)
-    private User guest;
+    private GuestProfile guest;
 
     @ManyToOne(optional = false)
     private Room room;
@@ -39,12 +39,26 @@ public class Booking {
 
     private LocalDateTime createdAt;
 
-    public Booking(User guest, Room room, LocalDate checkInDate, LocalDate checkOutDate, BigDecimal totalPrice) {
+    private LocalDateTime updatedAt;
+
+    protected Booking() {
+    }
+
+    public Booking(GuestProfile guest, Room room, LocalDate checkInDate, LocalDate checkOutDate, BigDecimal totalPrice) {
         this.guest = guest;
         this.room = room;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
         this.totalPrice = totalPrice;
+    }
+
+    @PrePersist
+    void prePersist() {
         this.createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    void preUpdate() {
+    this.updatedAt = LocalDateTime.now();
     }
 }

@@ -21,7 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig {
 
     private static final String[] PUBLIC = {
-	        "/api/v1/users",
+	       // "/api/v1/users",
 	        "/api/v1/auth/login",
             "/api/v1/roles/public"
 	    };

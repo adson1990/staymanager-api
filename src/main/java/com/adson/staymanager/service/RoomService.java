@@ -31,6 +31,7 @@ public class RoomService {
         return repository.findAll();
     }
 
+    @SuppressWarnings("null")
     public Room findById(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new RoomNotFoundException("Quarto não encontrado"));
