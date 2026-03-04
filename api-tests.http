@@ -1,9 +1,9 @@
 @baseUrl = http://localhost:8080
 @roomID = 2
 @bookingID = 3
-@accessTokenRecepcao = eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJzdGF5bWFuYWdlci1hcGkiLCJzdWIiOiJhZHNvbjJAZW1haWwuY29tIiwiaWF0IjoxNzcyNjM2Njk5LCJleHAiOjE3NzI2Mzc1OTksInVpZCI6Miwicm9sZSI6IlJFQ0VQQ0FPIn0.QzxqWWIa4LumSZN1CCIDwG5oyRz6jxXfAP5BQtK1slWl6EUed40Zp8YGPK737xJr
+@accessTokenRecepcao = eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJzdGF5bWFuYWdlci1hcGkiLCJzdWIiOiJhZHNvbjJAZW1haWwuY29tIiwiaWF0IjoxNzcyNjQ2ODc0LCJleHAiOjE3NzI2NDc3NzQsInVpZCI6Miwicm9sZSI6IlJFQ0VQQ0FPIn0.Bz0cMXrOAPDJYg-wgI2-84cFNBu5iDr39mmW5zgjnuKJQSnV1NWbvLkBjULmVmvi
 @accessTokenGerencia = eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJzdGF5bWFuYWdlci1hcGkiLCJzdWIiOiJhZHNvbkBlbWFpbC5jb20iLCJpYXQiOjE3NzI2MzU0NDAsImV4cCI6MTc3MjYzNjM0MCwidWlkIjoxLCJyb2xlIjoiR0VSRU5DSUEifQ.OHbiQveFrmn_sH2Y5Prw45HhhJ5Vvoz5l-XD1v6_lA4pz4KcIu_7c_gVsLPx42EE
-@accessTokenCliente = eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJzdGF5bWFuYWdlci1hcGkiLCJzdWIiOiJjYXJsb3NAZW1haWwuY29tIiwiaWF0IjoxNzcyNjM4NjQxLCJleHAiOjE3NzI2Mzk1NDEsInVpZCI6NSwicm9sZSI6IkNMSUVOVEUifQ.9RSi8oWTsf21GdffUsR7catnaQIYQEWEmqk3CjwcsC6U2Gap5K4THxwJG71IqGi9
+@accessTokenCliente = eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJzdGF5bWFuYWdlci1hcGkiLCJzdWIiOiJjYXJsb3NAZW1haWwuY29tIiwiaWF0IjoxNzcyNjUzMTIyLCJleHAiOjE3NzI2NTQwMjIsInVpZCI6NSwicm9sZSI6IkNMSUVOVEUifQ.hAjUyTNQ9iUvL6MqUXZ6b_yEFle8L1b8L8fhLWcteLMVKbbkwJ_HO4othNhZX109
 
 
 ### Login
@@ -120,4 +120,12 @@ Content-Type: application/json
 
 ### Login de cliente
 GET {{baseUrl}}/api/v1/me
+Authorization: Bearer {{accessTokenCliente}}
+
+### Consultar reservas do cliente (apenas cliente tem acesso)
+GET {{baseUrl}}/api/v1/me/bookings
+Authorization: Bearer {{accessTokenCliente}}
+
+### Total de gastos do cliente
+GET {{baseUrl}}/api/v1/me/summary
 Authorization: Bearer {{accessTokenCliente}}
