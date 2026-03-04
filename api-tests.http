@@ -1,26 +1,29 @@
 @baseUrl = http://localhost:8080
-@roomID = 1
-@accessToken = eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJzdGF5bWFuYWdlci1hcGkiLCJzdWIiOiJhZHNvbkBlbWFpbC5jb20iLCJpYXQiOjE3NzI1ODQ0MTAsImV4cCI6MTc3MjU4NTMxMCwidWlkIjozLCJyb2xlIjoiUkVDRVBDQU8ifQ.IdOmdVCZY2ZQ5zyryXpc9HwIaE_HyijpT5hRYhl6bFxhNPQ6zi9oNC234gBPUrqC
-@accessTokenGerencia = eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJzdGF5bWFuYWdlci1hcGkiLCJzdWIiOiJhZHNvbjJAZW1haWwuY29tIiwiaWF0IjoxNzcyNTg0MzgzLCJleHAiOjE3NzI1ODUyODMsInVpZCI6NSwicm9sZSI6IkdFUkVOQ0lBIn0.o6hOI6LDxY8KxRBO58kwAIMdirag8x4tr97tUlX_lAeV0TsqEBYsecR2cTt0sVbt
+@roomID = 2
+@bookingID = 3
+@accessTokenRecepcao = eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJzdGF5bWFuYWdlci1hcGkiLCJzdWIiOiJhZHNvbjJAZW1haWwuY29tIiwiaWF0IjoxNzcyNjM2Njk5LCJleHAiOjE3NzI2Mzc1OTksInVpZCI6Miwicm9sZSI6IlJFQ0VQQ0FPIn0.QzxqWWIa4LumSZN1CCIDwG5oyRz6jxXfAP5BQtK1slWl6EUed40Zp8YGPK737xJr
+@accessTokenGerencia = eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJzdGF5bWFuYWdlci1hcGkiLCJzdWIiOiJhZHNvbkBlbWFpbC5jb20iLCJpYXQiOjE3NzI2MzU0NDAsImV4cCI6MTc3MjYzNjM0MCwidWlkIjoxLCJyb2xlIjoiR0VSRU5DSUEifQ.OHbiQveFrmn_sH2Y5Prw45HhhJ5Vvoz5l-XD1v6_lA4pz4KcIu_7c_gVsLPx42EE
+@accessTokenCliente = eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJzdGF5bWFuYWdlci1hcGkiLCJzdWIiOiJjYXJsb3NAZW1haWwuY29tIiwiaWF0IjoxNzcyNjM4NjQxLCJleHAiOjE3NzI2Mzk1NDEsInVpZCI6NSwicm9sZSI6IkNMSUVOVEUifQ.9RSi8oWTsf21GdffUsR7catnaQIYQEWEmqk3CjwcsC6U2Gap5K4THxwJG71IqGi9
 
-### Criar usuário
-POST {{baseUrl}}/api/v1/users
-Content-Type: application/json
-
-{
-  "name": "Adson4",
-  "email": "adson4@email.com",
-  "password": "123456",
-  "role": "CLIENTE"
-}
 
 ### Login
 POST {{baseUrl}}/api/v1/auth/login
 Content-Type: application/json
 
 {
-  "email": "adson@email.com",
+  "email": "carlos@email.com",
   "password": "123456"
+}
+
+### Criar usuário
+POST {{baseUrl}}/api/v1/users
+Content-Type: application/json
+
+{
+  "name": "Adson2",
+  "email": "adson2@email.com",
+  "password": "123456",
+  "role": "RECEPCAO"
 }
 
 ### Me sem token (Deve dar 401)
@@ -28,7 +31,7 @@ GET {{baseUrl}}/api/v1/me
 
 ### Me com token (deve dar 200)
 GET {{baseUrl}}/api/v1/me
-Authorization: Bearer {{accessToken}}
+Authorization: Bearer {{accessTokenRecepcao}}
 
 ### Error genérico (para testar o fallback)
 POST {{baseUrl}}/api/v1/users
@@ -42,7 +45,7 @@ Content-Type: application/json
 
 ### Reception (deve 200)
 GET {{baseUrl}}/api/v1/roles/reception
-Authorization: Bearer {{accessTokenGerencia}}
+Authorization: Bearer {{accessTokenRecepcao}}
 
 ### Management (deve 403 para RECEPCAO)
 GET {{baseUrl}}/api/v1/roles/management
@@ -65,7 +68,7 @@ Content-Type: application/json
 
 ### listar quartos
 GET {{baseUrl}}/api/v1/rooms
-Authorization: Bearer {{accessToken}}
+Authorization: Bearer {{accessTokenRecepcao}}
 
 ### trocar status do quarto
 PATCH {{baseUrl}}/api/v1/rooms/{{roomID}}/status?status=AVAILABLE
@@ -73,16 +76,48 @@ Authorization: Bearer {{accessTokenGerencia}}
 
 ### Criando reserva
 POST {{baseUrl}}/api/v1/bookings
-Authorization: Bearer {{accessToken}}
+Authorization: Bearer {{accessTokenRecepcao}}
 Content-Type: application/json
 
 {
-  "roomId": 1,
-  "guestId": 4,
+  "roomId": 2,
+  "guestId": 1,
   "checkInDate": "2026-03-05",
   "checkOutDate": "2026-03-06"
 }
 
 ### Fazendo check-in
-PATCH {{baseUrl}}/api/v1/bookings/{{roomID}}/check-in
-Authorization: Bearer {{accessToken}}
+PATCH {{baseUrl}}/api/v1/bookings/{{bookingID}}/check-in
+Authorization: Bearer {{accessTokenRecepcao}}
+
+### Fazendo check-out
+PATCH {{baseUrl}}/api/v1/bookings/{{bookingID}}/check-out
+Authorization: Bearer {{accessTokenRecepcao}}
+
+### Cancelando reserva
+PATCH {{baseUrl}}/api/v1/bookings/{{bookingID}}/cancel
+Authorization: Bearer {{accessTokenRecepcao}}
+
+### Criando perfil de convidado (para cliente)
+POST {{baseUrl}}/api/v1/guests
+Authorization: Bearer {{accessTokenRecepcao}}
+Content-Type: application/json
+
+{
+  "name": "Carlos Silva",
+  "email": "carlos@email.com",
+  "password": "123456",
+  "cpf": "12345678909",
+  "phone": "81999999999",
+  "birthDate": "1990-05-10",
+  "cep": "50000000",
+  "street": "Rua Teste",
+  "number": 100,
+  "district": "Centro",
+  "city": "Recife",
+  "state": "PE"
+}
+
+### Login de cliente
+GET {{baseUrl}}/api/v1/me
+Authorization: Bearer {{accessTokenCliente}}
