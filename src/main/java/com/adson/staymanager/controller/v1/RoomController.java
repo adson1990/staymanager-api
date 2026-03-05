@@ -10,6 +10,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -54,5 +56,17 @@ public class RoomController {
 
         Room room = service.changeStatus(id, status);
         return RoomMapper.toResponse(room);
+    }
+
+    @GetMapping("/available")
+         @PreAuthorize("hasAnyRole('ADMIN','GERENCIA','RECEPCAO')")
+         public List<RoomResponseDTO> available(
+                 @RequestParam LocalDate checkIn,
+                 @RequestParam LocalDate checkOut
+         ) {
+             return service.findAvailableRooms(checkIn, checkOut)
+                     .stream()
+                     .map(RoomMapper::toResponse)
+                     .toList();
     }
 }

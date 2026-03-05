@@ -25,11 +25,12 @@ public class MeController {
 
     private final UserRepository userRepository;
     private final GuestProfileRepository guestProfileRepository;
-    private final BookingRepository bookingRepository;
+    private final BookingRepository bookingRepository;   
 
     public MeController(UserRepository userRepository, 
                         GuestProfileRepository guestProfileRepository, 
-                        BookingRepository bookingRepository) {
+                        BookingRepository bookingRepository
+                        ) {
         this.userRepository = userRepository;
         this.guestProfileRepository = guestProfileRepository;
         this.bookingRepository = bookingRepository;
@@ -85,8 +86,9 @@ public class MeController {
       long totalBookings = bookingRepository.countByGuestId(guestId);
       var totalSpent = bookingRepository.sumTotalPriceByGuestId(guestId);
 
-      long totalReserved = bookingRepository.countByGuestIdAndStatus(guestId, BookingStatus.RESERVED);
-      long totalCheckedIn = bookingRepository.countByGuestIdAndStatus(guestId, BookingStatus.CHECKED_IN);
+      boolean existsReserved = bookingRepository.existsByGuestIdAndStatus(guestId, BookingStatus.RESERVED);
+      long totalCheckedIn = (bookingRepository.countByGuestIdAndStatus(guestId, BookingStatus.CHECKED_IN)
+                             + bookingRepository.countByGuestIdAndStatus(guestId, BookingStatus.CHECKED_OUT));
       long totalCheckedOut = bookingRepository.countByGuestIdAndStatus(guestId, BookingStatus.CHECKED_OUT);
       long totalCancelled = bookingRepository.countByGuestIdAndStatus(guestId, BookingStatus.CANCELLED);
 
@@ -95,11 +97,12 @@ public class MeController {
       return new MeSummaryResponseDTO(
               totalBookings,
               totalSpent,
-              totalReserved,
+              existsReserved,
               totalCheckedIn,
               totalCheckedOut,
               totalCancelled,
               lastCheckInDate
       );
     }
+
 }

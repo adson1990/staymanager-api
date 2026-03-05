@@ -40,8 +40,9 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     // contagem por status
     long countByGuestIdAndStatus(Long guestId, BookingStatus status);
 
+    boolean existsByGuestIdAndStatus(Long guestId, BookingStatus status);
+
     // última data de check-in (pela data de check-in)
     @Query("select max(b.checkInDate) from Booking b where b.guest.id = :guestId")
     Optional<LocalDate> findLastCheckInDateByGuestId(@Param("guestId") Long guestId);
-    
 }

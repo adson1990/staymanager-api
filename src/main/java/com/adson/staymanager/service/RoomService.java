@@ -1,5 +1,6 @@
 package com.adson.staymanager.service;
 
+import com.adson.staymanager.entity.BookingStatus;
 import com.adson.staymanager.entity.Room;
 import com.adson.staymanager.entity.RoomStatus;
 import com.adson.staymanager.exception.BusinessRuleException;
@@ -8,14 +9,16 @@ import com.adson.staymanager.repository.RoomRepository;
 
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class RoomService {
 
     private final RoomRepository repository;
 
-    public RoomService(RoomRepository repository) {
+    public RoomService(RoomRepository repository   ) {
         this.repository = repository;
     }
 
@@ -96,5 +99,25 @@ public class RoomService {
         return new BusinessRuleException(
             "Transição de status não permitida: " + current + " -> " + next + ". " + hint
         );
+    }
+
+    public List<Room> findAvailableRooms(LocalDate checkIn, LocalDate checkOut) {
+
+        if (!checkOut.isAfter(checkIn)) {
+            throw new BusinessRuleException("checkOutDate deve ser depois de checkInDate");
+        }
+
+        List<Long> conflictingRoomIds = repository.findConflictingRoomIds(
+                List.of(BookingStatus.RESERVED, BookingStatus.CHECKED_IN),
+                checkIn,
+                checkOut
+        );
+
+        Set<Room> candidates = repository.findByStatusNot(RoomStatus.MAINTENANCE);
+
+        // pega todos que não estão em manutenção e remove os conflitantes
+        return candidates.stream()
+                .filter(r -> !conflictingRoomIds.contains(r.getId()))
+                .toList();
     }
 }

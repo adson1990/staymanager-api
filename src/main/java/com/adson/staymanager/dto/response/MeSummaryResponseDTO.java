@@ -6,7 +6,7 @@ import java.time.LocalDate;
 public record MeSummaryResponseDTO(
         Long totalBookings,
         BigDecimal totalSpent,
-        Long totalReserved,
+        boolean existsReserved,
         Long totalCheckedIn,
         Long totalCheckedOut,
         Long totalCancelled,
