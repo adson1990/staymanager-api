@@ -19,16 +19,19 @@ import java.util.List;
 public class RoomController {
 
     private final RoomService service;
+    private final RoomMapper mapper;
 
-    public RoomController(RoomService service) {
+    public RoomController(RoomService service, RoomMapper mapper) {
         this.service = service;
+        this.mapper = mapper;
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','GERENCIA')")
+    @SuppressWarnings("static-access")
     @PostMapping
     public RoomResponseDTO create(@Valid @RequestBody RoomRequestDTO dto) {
-        Room room = service.create(RoomMapper.toEntity(dto));
-        return RoomMapper.toResponse(room);
+        Room room = service.create(mapper.toEntity(dto));
+        return mapper.toResponse(room);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','GERENCIA','RECEPCAO','MANUTENCAO')")

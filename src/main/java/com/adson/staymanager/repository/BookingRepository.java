@@ -24,7 +24,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     // detectar conflitos de reserva para um quarto específico
     boolean existsByRoomIdAndStatusInAndCheckOutDateAfterAndCheckInDateBefore(
-        Long roomId,
+        long roomId,
         Iterable<BookingStatus> statuses,
         LocalDate checkOut,
         LocalDate checkIn

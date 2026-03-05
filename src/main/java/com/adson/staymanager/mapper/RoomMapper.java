@@ -1,9 +1,12 @@
 package com.adson.staymanager.mapper;
 
+import org.springframework.stereotype.Component;
+
 import com.adson.staymanager.dto.request.RoomRequestDTO;
 import com.adson.staymanager.dto.response.RoomResponseDTO;
 import com.adson.staymanager.entity.Room;
 
+@Component
 public class RoomMapper {
 
     public static Room toEntity(RoomRequestDTO dto) {

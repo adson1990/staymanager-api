@@ -30,7 +30,7 @@ public class Room {
     @Column(nullable = false)
     private Instant updatedAt;
 
-    protected Room() {}
+    public Room() {}
 
     public Room(String number, Integer floor, BigDecimal dailyRate) {
         this.number = number;
