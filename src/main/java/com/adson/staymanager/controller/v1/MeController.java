@@ -40,7 +40,7 @@ public class MeController {
     @GetMapping
     public MeResponseDTO me(Authentication authentication) {
 
-        String email = authentication.getName(); // principal
+        String email = authentication.getName();
         var user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new BusinessRuleException("Usuário não encontrado"));
 
