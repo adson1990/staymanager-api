@@ -5,6 +5,10 @@ import com.adson.staymanager.dto.response.BookingResponseDTO;
 import com.adson.staymanager.entity.BookingStatus;
 import com.adson.staymanager.mapper.BookingMapper;
 import com.adson.staymanager.service.BookingService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 
 import org.springframework.data.domain.Page;
@@ -24,6 +28,12 @@ public class BookingController {
     }
 
     // Recepção/Gerência/Admin fazem reservas
+    @Operation(summary = "Criar reserva", description = "Cria uma nova reserva para um hóspede em um quarto.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Reserva criada com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Dados inválidos"),
+        @ApiResponse(responseCode = "404", description = "Quarto ou hóspede não encontrado")
+    })
     @PreAuthorize("hasAnyRole('ADMIN','GERENCIA','RECEPCAO')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

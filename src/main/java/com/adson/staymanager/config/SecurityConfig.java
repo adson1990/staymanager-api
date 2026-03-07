@@ -25,7 +25,10 @@ public class SecurityConfig {
     private static final String[] PUBLIC = {
 	       // "/api/v1/users",
 	        "/api/v1/auth/login",
-            "/api/v1/roles/public"
+            "/api/v1/roles/public",
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html"
 	    };
 
     @Bean
