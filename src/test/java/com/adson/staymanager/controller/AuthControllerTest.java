@@ -6,6 +6,9 @@ import com.adson.staymanager.entity.Role;
 import com.adson.staymanager.entity.User;
 import com.adson.staymanager.service.AuthService;
 import com.adson.staymanager.service.RefreshTokenService;
+
+import jakarta.servlet.http.HttpServletRequest;
+
 import com.adson.staymanager.security.TokenService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -50,7 +53,7 @@ class AuthControllerTest {
         ReflectionTestUtils.setField(user, "id", 1L);
 
         // act
-        when(authService.authenticate(any(LoginRequestDTO.class))).thenReturn(user);
+        when(authService.authenticate(any(LoginRequestDTO.class), any(HttpServletRequest.class))).thenReturn(user);
         when(tokenService.generateAccessToken(any(Long.class), any(String.class), any(Role.class)))
         .thenReturn("token123");
         when(refreshTokenService.issueRefreshToken(any(User.class))).thenReturn("refresh123");

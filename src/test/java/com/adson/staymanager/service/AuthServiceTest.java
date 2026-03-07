@@ -58,7 +58,7 @@ class AuthServiceTest {
         when(passwordEncoder.matches("123456", user.getPassword())).thenReturn(true);
 
         // act
-        User result = authService.authenticate(request);
+        User result = authService.authenticate(request, null);
 
         // assert
         assertNotNull(result);
@@ -80,7 +80,7 @@ class AuthServiceTest {
 
         when(userRepository.findByEmail(eq("naoexiste@email.com"))).thenReturn(Optional.empty());
 
-        assertThrows(UserNotFoundException.class, () -> authService.authenticate(request));
+        assertThrows(UserNotFoundException.class, () -> authService.authenticate(request, null));
 
         verify(userRepository).findByEmail("naoexiste@email.com");
         verifyNoInteractions(passwordEncoder);
@@ -101,7 +101,7 @@ class AuthServiceTest {
         when(userRepository.findByEmail(eq("adson@email.com"))).thenReturn(Optional.of(user));
         when(passwordEncoder.matches("errada", user.getPassword())).thenReturn(false);
 
-        assertThrows(InvalidCredentialsException.class, () -> authService.authenticate(request));
+        assertThrows(InvalidCredentialsException.class, () -> authService.authenticate(request,null));
 
         verify(userRepository).findByEmail("adson@email.com");
         verify(passwordEncoder).matches("errada", user.getPassword());

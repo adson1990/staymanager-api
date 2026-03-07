@@ -4,6 +4,7 @@ import com.adson.staymanager.dto.request.LoginRequestDTO;
 import com.adson.staymanager.dto.request.RefreshTokenRequestDTO;
 import com.adson.staymanager.entity.User;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,9 +29,9 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthTokensResponseDTO> login(@Valid @RequestBody LoginRequestDTO request) {
+    public ResponseEntity<AuthTokensResponseDTO> login(@Valid @RequestBody LoginRequestDTO request, HttpServletRequest httpRequest) {
 
-        User user = authService.authenticate(request);
+        User user = authService.authenticate(request, httpRequest);
 
         String access = tokenService.generateAccessToken(user.getId(), user.getEmail(), user.getRole());
         String refresh = refreshTokenService.issueRefreshToken(user);

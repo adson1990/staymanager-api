@@ -26,7 +26,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.tokenService = tokenService;
     }
 
-    @SuppressWarnings("null")
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,
