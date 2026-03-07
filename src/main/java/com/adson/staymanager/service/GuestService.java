@@ -27,8 +27,7 @@ public class GuestService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
-    @Transactional
+@Transactional
     public GuestProfile createGuest(GuestCreateRequestDTO dto) {
 
         if (guestRepository.existsByCpf(dto.cpf())) {
@@ -61,4 +60,5 @@ public class GuestService {
 
         return guestRepository.save(profile);
     }
+    
 }

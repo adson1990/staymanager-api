@@ -36,7 +36,6 @@ public class BookingService {
             throw new BusinessRuleException("checkOutDate deve ser depois de checkInDate");
         }
 
-        @SuppressWarnings("null")
         Room room = roomRepository.findById(roomId)
                 .orElseThrow(() -> new BusinessRuleException("Quarto não encontrado"));
 
@@ -44,7 +43,6 @@ public class BookingService {
             throw new BusinessRuleException("Quarto em manutenção não pode ser reservado");
         }
 
-        @SuppressWarnings("null")
         GuestProfile guest = guestProfileRepository.findById(guestProfileId)
                 .orElseThrow(() -> new BusinessRuleException("Hóspede não encontrado"));
 

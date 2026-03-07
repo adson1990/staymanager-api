@@ -79,10 +79,6 @@ class BookingServiceTest {
   }
 
   @Test
-  void shouldThrowWhenCheckOutBeforeCheckIn() {
-  }
-
-  @Test
   void shouldReturnCheckInSuccessfully() {
       User user = new User();
       ReflectionTestUtils.setField(user, "id", 1L);
