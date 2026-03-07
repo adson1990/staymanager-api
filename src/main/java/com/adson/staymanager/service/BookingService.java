@@ -142,4 +142,32 @@ public class BookingService {
 
         return saved;
     }
+
+    public Booking findById(Long id) {
+        return bookingRepository.findById(id)
+                .orElseThrow(() -> new BusinessRuleException("Reserva não encontrada"));
+    }
+
+    public List<Booking> findAll() {
+        return bookingRepository.findAll();
+    }
+
+    public List<Booking> findByRoomId(Long roomId){
+        if(!roomRepository.existsById(roomId)){
+            throw new BusinessRuleException("Quarto não encontrado");
+        }           
+        return bookingRepository.findByRoomIdOrderByCheckInDateDesc(roomId);
+    }
+
+    public List<Booking> findByGuestId(Long guestId){
+        if(!guestProfileRepository.existsById(guestId)){
+            throw new BusinessRuleException("Hóspede não encontrado");
+            }
+        return bookingRepository.findByGuestIdOrderByCheckInDateDesc(guestId);       
+    }
+
+    public List<Booking> findByStatus(BookingStatus status){
+        return bookingRepository.findByStatusOrderByCheckInDateDesc(status);
+    }
+
 }

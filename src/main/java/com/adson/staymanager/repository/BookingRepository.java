@@ -13,14 +13,14 @@ import com.adson.staymanager.entity.Booking;
 import com.adson.staymanager.entity.BookingStatus;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
-    
-    List<Booking> findByGuestId(Long guestId);
 
-    List<Booking> findByRoomId(Long roomId);
+    List<Booking> findByRoomIdOrderByCheckInDateDesc(Long roomId);
 
-    List<Booking> findByStatus(BookingStatus status);
+    List<Booking> findByStatusOrderByCheckInDateDesc(BookingStatus status);
 
     List<Booking> findByGuestIdOrderByCheckInDateDesc(Long guestId);
+
+    List<Booking> findAllByOrderByCheckInDateDesc();
 
     // detectar conflitos de reserva para um quarto específico
     boolean existsByRoomIdAndStatusInAndCheckOutDateAfterAndCheckInDateBefore(
@@ -45,4 +45,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     // última data de check-in (pela data de check-in)
     @Query("select max(b.checkInDate) from Booking b where b.guest.id = :guestId")
     Optional<LocalDate> findLastCheckInDateByGuestId(@Param("guestId") Long guestId);
+
+    Optional<Booking> findById(Long id);
 }
