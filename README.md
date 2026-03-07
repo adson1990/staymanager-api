@@ -1,79 +1,194 @@
 🚀 StayManager API — Spring Boot + JWT Authentication
 
-Backend desenvolvido com Java e Spring Boot, focado em segurança, arquitetura limpa e boas práticas modernas para APIs REST.
+API REST para gestão de hotelaria desenvolvida com Java e Spring Boot, focada em segurança, arquitetura limpa e boas práticas modernas para APIs REST.
 
-O projeto implementa autenticação stateless com JWT (Access + Refresh Token), validação robusta de dados e tratamento padronizado de exceções.
+O projeto implementa autenticação stateless com JWT (Access + Refresh Token), controle de acesso baseado em roles, auditoria de login, paginação de resultados e documentação interativa com Swagger/OpenAPI.
+
 
 🛠 Stack Tecnológica
 
 Java 17+
+
 Spring Boot 3.x
+
 Spring Security
+
 JWT (JSON Web Token)
+
 Spring Data JPA / Hibernate
+
 PostgreSQL
+
 Bean Validation (Jakarta Validation)
+
 Maven
+
+Swagger / OpenAPI (SpringDoc)
+
 Git & GitHub
+
 
 🔐 Segurança Implementada
 
-Autenticação stateless com Access Token (JWT)
+O sistema implementa um modelo de segurança stateless, sem uso de sessão.
+
+Principais recursos:
+
+Autenticação com JWT Access Token
+
 Refresh Token com rotação
+
 Filtro customizado para validação do Bearer Token
+
 Criptografia de senha com BCrypt
+
+Controle de acesso baseado em roles
+
 Tratamento adequado de:
 
-401 Unauthorized (não autenticado)
-403 Forbidden (sem permissão)
+401 Unauthorized  → Usuário não autenticado
+403 Forbidden     → Usuário sem permissão
+Auditoria de Login
 
-O sistema possui autenticação JWT, controle por roles e trilha de auditoria para eventos de login.
+O sistema registra eventos de autenticação incluindo:
+
+ID do usuário
+
+Email utilizado
+
+IP do cliente
+
+User-Agent
+
+Timestamp do login
+
+Resultado da tentativa (SUCCESS ou FAILURE)
+
+Motivo da falha (quando aplicável)
+
+Essa auditoria permite rastreabilidade de acessos e demonstra boas práticas de segurança.
+
 
 💡 Funcionalidades Atuais
+🔑 Autenticação
 
 Registro de usuários
-Login com geração de Access + Refresh Token
-Endpoint protegido por autenticação JWT
-Validação de dados com @Valid
-Tratamento global de exceções (@ControllerAdvice)
-Separação clara entre:
 
-Controller
-Service
-Repository
-DTO
-Camada de Segurança
+Login com geração de Access Token + Refresh Token
+
+Renovação de token via refresh
+
+Auditoria de tentativas de login
+
+
+👤 Gestão de Usuários
+
+CRUD de usuários
+
+Controle de acesso por roles
+
+
+🏨 Gestão de Quartos
+
+Cadastro de quartos
+
+Atualização de status
+
+Consulta de disponibilidade
+
+
+📅 Sistema de Reservas
+
+Criação de reservas
+
+Check-in
+
+Check-out
+
+Cancelamento de reservas
+
+Validação de conflito de datas
+
+
+📊 Consultas com Paginação
+
+Listagem de reservas
+
+Listagem de quartos
+
+Filtros por:
+
+quarto
+
+hóspede
+
+status
+
+suporte a:
+
+?page=0
+&size=10
+&sort=checkInDate,desc
+
+📚 Documentação da API
+
+A API possui documentação interativa via Swagger / OpenAPI.
+
+Após iniciar a aplicação, acesse:
+
+http://localhost:8080/swagger-ui.html
+
+Ou:
+
+http://localhost:8080/swagger-ui/index.html
 
 🏗 Arquitetura e Boas Práticas
 
-O projeto segue princípios de:
+O projeto segue princípios de engenharia de software como:
 
 Clean Code
+
 Separação de responsabilidades
-Imutabilidade (uso de record para DTOs)
-Desacoplamento entre entidade e camada de transporte
-Arquitetura stateless (sem uso de sessão)
 
-Fluxo da aplicação:
+Arquitetura em camadas
 
-Request
-   ↓
-JWT Filter
-   ↓
+DTOs para transporte de dados
+
+Imutabilidade com record
+
+Tratamento global de exceções (@RestControllerAdvice)
+
+API stateless
+
+Estrutura do Projeto
+controller
+service
+repository
+entity
+dto
+mapper
+security
+config
+exception
+Fluxo da aplicação
+HTTP Request
+      ↓
+JWT Authentication Filter
+      ↓
 SecurityContext
-   ↓
+      ↓
 Controller
-   ↓
+      ↓
 Service
-   ↓
+      ↓
 Repository
+      ↓
+Database
 
-▶️ Como Executar
-
-1️⃣ Clone o projeto
+▶️ Como Executar o Projeto
+1️⃣ Clone o repositório
 git clone https://github.com/adson1990/staymanager-api.git
 cd staymanager-api
-
 2️⃣ Configure o banco de dados
 
 Crie um banco PostgreSQL:
@@ -89,16 +204,38 @@ spring.datasource.password=SUA_SENHA
 spring.jpa.hibernate.ddl-auto=update
 
 3️⃣ Execute a aplicação
-
 ./mvnw spring-boot:run
 
-A API estará disponível em:
+ou
 
+mvn spring-boot:run
+4️⃣ Acesse a API
 http://localhost:8080
+
+Swagger UI:
+
+http://localhost:8080/swagger-ui.html
 
 📌 Próximos Passos
 
-Autorização baseada em Roles
-Dockerização
-Testes automatizados
+Melhorias planejadas para evolução do projeto:
+
+Testes automatizados (JUnit + Mockito)
+
+Dockerização da aplicação
+
 Deploy em ambiente cloud
+
+Dashboard frontend consumindo a API
+
+Monitoramento e métricas
+
+👨‍💻 Autor
+
+Adson Farias
+
+GitHub:
+https://github.com/adson1990
+
+💡 Observação:
+Este projeto foi desenvolvido como parte de estudo avançado em Java, Spring Boot, segurança de APIs e arquitetura backend moderna.
