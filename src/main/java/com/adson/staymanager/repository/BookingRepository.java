@@ -2,25 +2,26 @@ package com.adson.staymanager.repository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.adson.staymanager.entity.Booking;
 import com.adson.staymanager.entity.BookingStatus;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
-    List<Booking> findByRoomIdOrderByCheckInDateDesc(Long roomId);
+    Page<Booking> findByRoomIdOrderByCheckInDateDesc(Long roomId, Pageable pageable);
 
-    List<Booking> findByStatusOrderByCheckInDateDesc(BookingStatus status);
+    Page<Booking> findByStatusOrderByCheckInDateDesc(BookingStatus status, Pageable pageable);
 
-    List<Booking> findByGuestIdOrderByCheckInDateDesc(Long guestId);
+    Page<Booking> findByGuestIdOrderByCheckInDateDesc(Long guestId, Pageable pageable);
 
-    List<Booking> findAllByOrderByCheckInDateDesc();
+    Page<Booking> findAllByOrderByCheckInDateDesc(Pageable pageable);
 
     // detectar conflitos de reserva para um quarto específico
     boolean existsByRoomIdAndStatusInAndCheckOutDateAfterAndCheckInDateBefore(

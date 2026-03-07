@@ -7,8 +7,8 @@ import com.adson.staymanager.mapper.BookingMapper;
 import com.adson.staymanager.service.BookingService;
 import jakarta.validation.Valid;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -58,38 +58,30 @@ public class BookingController {
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN','GERENCIA','RECEPCAO')")
-    public List<BookingResponseDTO> findAll() {
-        return service.findAll()
-                .stream()
-                .map(BookingMapper::toResponse)
-                .toList();
+    public Page<BookingResponseDTO> findAll(Pageable pageable) {
+        return service.findAll(pageable)
+                .map(BookingMapper::toResponse);
     }
 
     @GetMapping("/room/{roomId}")
     @PreAuthorize("hasAnyRole('ADMIN','GERENCIA','RECEPCAO')")
-    public List<BookingResponseDTO> findByRoom(@PathVariable Long roomId) {
-        return service.findByRoomId(roomId)
-                .stream()
-                .map(BookingMapper::toResponse)
-                .toList();
+    public Page<BookingResponseDTO> findByRoom(@PathVariable Long roomId, Pageable pageable) {
+        return service.findByRoomId(roomId, pageable)
+                .map(BookingMapper::toResponse);
     }
 
     @GetMapping("/guest/{guestId}")
     @PreAuthorize("hasAnyRole('ADMIN','GERENCIA','RECEPCAO')")
-    public List<BookingResponseDTO> findByGuest(@PathVariable Long guestId) {
-        return service.findByGuestId(guestId)
-                .stream()
-                .map(BookingMapper::toResponse)
-                .toList();
+    public Page<BookingResponseDTO> findByGuest(@PathVariable Long guestId, Pageable pageable) {
+        return service.findByGuestId(guestId, pageable)
+                .map(BookingMapper::toResponse);
     }
 
     @GetMapping("/status/{status}")
     @PreAuthorize("hasAnyRole('ADMIN','GERENCIA','RECEPCAO')")
-    public List<BookingResponseDTO> findByStatus(@PathVariable BookingStatus status) {
-        return service.findByStatus(status)
-                .stream()
-                .map(BookingMapper::toResponse)
-                .toList();
+    public Page<BookingResponseDTO> findByStatus(@PathVariable BookingStatus status, Pageable pageable) {
+        return service.findByStatus(status, pageable)
+                .map(BookingMapper::toResponse);
     }
     
 }

@@ -27,6 +27,8 @@ Tratamento adequado de:
 401 Unauthorized (não autenticado)
 403 Forbidden (sem permissão)
 
+O sistema possui autenticação JWT, controle por roles e trilha de auditoria para eventos de login.
+
 💡 Funcionalidades Atuais
 
 Registro de usuários

@@ -5,6 +5,9 @@ import com.adson.staymanager.exception.BusinessRuleException;
 import com.adson.staymanager.repository.BookingRepository;
 import com.adson.staymanager.repository.GuestProfileRepository;
 import com.adson.staymanager.repository.RoomRepository;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -148,26 +151,26 @@ public class BookingService {
                 .orElseThrow(() -> new BusinessRuleException("Reserva não encontrada"));
     }
 
-    public List<Booking> findAll() {
-        return bookingRepository.findAll();
+    public Page<Booking> findAll(Pageable pageable) {
+        return bookingRepository.findAllByOrderByCheckInDateDesc(pageable);
     }
 
-    public List<Booking> findByRoomId(Long roomId){
+    public Page<Booking> findByRoomId(Long roomId, Pageable pageable){
         if(!roomRepository.existsById(roomId)){
             throw new BusinessRuleException("Quarto não encontrado");
         }           
-        return bookingRepository.findByRoomIdOrderByCheckInDateDesc(roomId);
+        return bookingRepository.findByRoomIdOrderByCheckInDateDesc(roomId, pageable);
     }
 
-    public List<Booking> findByGuestId(Long guestId){
+    public Page<Booking> findByGuestId(Long guestId, Pageable pageable){
         if(!guestProfileRepository.existsById(guestId)){
             throw new BusinessRuleException("Hóspede não encontrado");
             }
-        return bookingRepository.findByGuestIdOrderByCheckInDateDesc(guestId);       
+        return bookingRepository.findByGuestIdOrderByCheckInDateDesc(guestId, pageable);       
     }
 
-    public List<Booking> findByStatus(BookingStatus status){
-        return bookingRepository.findByStatusOrderByCheckInDateDesc(status);
+    public Page<Booking> findByStatus(BookingStatus status, Pageable pageable){
+        return bookingRepository.findByStatusOrderByCheckInDateDesc(status, pageable);
     }
 
 }

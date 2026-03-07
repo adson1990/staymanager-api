@@ -1,7 +1,7 @@
 package com.adson.staymanager.controller.v1;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,7 +52,7 @@ public class MeController {
 
     @PreAuthorize("hasRole('CLIENTE')")
     @GetMapping("/bookings")
-    public List<MyBookingResponseDTO> myBookings(Authentication authentication) {
+    public Page<MyBookingResponseDTO> myBookings(Authentication authentication, Pageable pageable) {
 
         String email = authentication.getName();
 
@@ -63,10 +63,9 @@ public class MeController {
             .orElseThrow(() -> new BusinessRuleException("Perfil de hóspede não encontrado"));
 
         return bookingRepository
-            .findByGuestIdOrderByCheckInDateDesc(profile.getId())
-            .stream()
-            .map(BookingMapper::toMyBookingDTO)
-            .toList();
+            .findByGuestIdOrderByCheckInDateDesc(profile.getId(), pageable)
+            .map(BookingMapper::toMyBookingDTO);
+
     }
 
     @PreAuthorize("hasRole('CLIENTE')")

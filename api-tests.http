@@ -3,7 +3,7 @@
 @bookingID = 10
 @guestID = 8
 @status = CANCELLED
-@accessTokenRecepcao = eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJzdGF5bWFuYWdlci1hcGkiLCJzdWIiOiJhZHNvbjJAZW1haWwuY29tIiwiaWF0IjoxNzcyODg5NTI1LCJleHAiOjE3NzI4OTA0MjUsInVpZCI6Miwicm9sZSI6IlJFQ0VQQ0FPIn0.Ba77CLDMfzA8_0lvIXFM5DwnnxdRsmhppFAvWe5k8BMXxi1ksxZPpbub3x1kiswi
+@accessTokenRecepcao = eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJzdGF5bWFuYWdlci1hcGkiLCJzdWIiOiJhZHNvbjJAZW1haWwuY29tIiwiaWF0IjoxNzcyOTAyNTAzLCJleHAiOjE3NzI5MDM0MDMsInVpZCI6Miwicm9sZSI6IlJFQ0VQQ0FPIn0.KnfpEWd9g9aLQvH4b6HJnDR2nD8Up_WICCHwOUtN4hajV0jjREi7Z40wX2Z3-F_y
 @accessTokenGerencia = eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJzdGF5bWFuYWdlci1hcGkiLCJzdWIiOiJhZHNvbkBlbWFpbC5jb20iLCJpYXQiOjE3NzI2MzU0NDAsImV4cCI6MTc3MjYzNjM0MCwidWlkIjoxLCJyb2xlIjoiR0VSRU5DSUEifQ.OHbiQveFrmn_sH2Y5Prw45HhhJ5Vvoz5l-XD1v6_lA4pz4KcIu_7c_gVsLPx42EE
 @accessTokenCliente = eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJzdGF5bWFuYWdlci1hcGkiLCJzdWIiOiJjYXJsb3NAZW1haWwuY29tIiwiaWF0IjoxNzcyNjU5OTYxLCJleHAiOjE3NzI2NjA4NjEsInVpZCI6NSwicm9sZSI6IkNMSUVOVEUifQ.W_8vtO3_g1JlzwY29wJkyREs-5UV_HfNn2DbSq9HIMU7JvBIhhvOj-lF0i0m0Z77
 
@@ -133,21 +133,21 @@ GET {{baseUrl}}/api/v1/me/summary
 Authorization: Bearer {{accessTokenCliente}}
 
 ### Listar reservas (apenas para recepção e gerência)
-GET {{baseUrl}}/api/v1/bookings
+GET {{baseUrl}}/api/v1/bookings?page=0&size=10
 Authorization: Bearer {{accessTokenRecepcao}}
 
 ### Listar reservas por id(apenas para recepção e gerência)
-GET {{baseUrl}}/api/v1/bookings/{{bookingID}}
+GET {{baseUrl}}/api/v1/bookings/{{bookingID}}?page=0&size=5
 Authorization: Bearer {{accessTokenRecepcao}}
 
 ### Listar reservas por quarto(apenas para recepção e gerência)
-GET {{baseUrl}}/api/v1/bookings/room/{{roomID}}
+GET {{baseUrl}}/api/v1/bookings/room/{{roomID}}?page=0&size=5
 Authorization: Bearer {{accessTokenRecepcao}}
 
 ### Listar reservas por cliente (apenas para recepção e gerência)
-GET {{baseUrl}}/api/v1/bookings/guest/{{guestID}}
+GET {{baseUrl}}/api/v1/bookings/guest/{{guestID}}?page=0&size=5
 Authorization: Bearer {{accessTokenRecepcao}}
 
 ### Listar reservas por status (apenas para recepção e gerência)
-GET {{baseUrl}}/api/v1/bookings/status/{{status}}
+GET {{baseUrl}}/api/v1/bookings/status/{{status}}?page=0&size=5
 Authorization: Bearer {{accessTokenRecepcao}}
