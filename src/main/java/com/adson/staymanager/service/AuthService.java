@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import com.adson.staymanager.entity.LoginAudit;
 import com.adson.staymanager.entity.User;
+import com.adson.staymanager.exception.InvalidCredentialsException;
 import com.adson.staymanager.exception.UserNotFoundException;
 
 @Service
@@ -71,7 +72,7 @@ public class AuthService {
 
         loginAuditRepository.save(audit);
 
-        throw ex;
+        throw new InvalidCredentialsException("E-mail ou senha inválidos");
         }
     }
 }
