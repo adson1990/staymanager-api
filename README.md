@@ -242,6 +242,8 @@ http://localhost:8080/swagger-ui.html
 
 Melhorias planejadas para evolução do projeto:
 
+Uso de GitHub Flow + Pull Request + pipeline
+
 Deploy em ambiente cloud
 
 Dashboard frontend consumindo a API
