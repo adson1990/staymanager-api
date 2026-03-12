@@ -27,6 +27,8 @@ Swagger / OpenAPI (SpringDoc)
 
 Git & GitHub
 
+Docker
+
 
 🔐 Segurança Implementada
 
@@ -34,15 +36,15 @@ O sistema implementa um modelo de segurança stateless, sem uso de sessão.
 
 Principais recursos:
 
-Autenticação com JWT Access Token
+*Autenticação com JWT Access Token*
 
-Refresh Token com rotação
+*Refresh Token com rotação*
 
-Filtro customizado para validação do Bearer Token
+*Filtro customizado para validação do Bearer Token*
 
-Criptografia de senha com BCrypt
+*Criptografia de senha com BCrypt*
 
-Controle de acesso baseado em roles
+*Controle de acesso baseado em roles*
 
 Tratamento adequado de:
 
@@ -130,6 +132,10 @@ suporte a:
 &size=10
 &sort=checkInDate,desc
 
+💻 Testing
+
+Este projeto inclui testes automatizados *Spring Boot Tests*
+
 📚 Documentação da API
 
 A API possui documentação interativa via Swagger / OpenAPI.
@@ -185,6 +191,22 @@ Repository
       ↓
 Database
 
+🐳 Docker
+
+Esta aplicação roda usando arquitetura de container com *multi-stage docker build*
+- Spring Boot APi
+- PostgreSQL Database
+
+Docker compose orquestrando ambos serviços
+
+Client
+  |
+  v
+Spring Boot API (Docker)
+  |
+  v
+PostgreSQL (Docker)
+
 ▶️ Como Executar o Projeto
 1️⃣ Clone o repositório
 git clone https://github.com/adson1990/staymanager-api.git
@@ -219,10 +241,6 @@ http://localhost:8080/swagger-ui.html
 📌 Próximos Passos
 
 Melhorias planejadas para evolução do projeto:
-
-Testes automatizados (JUnit + Mockito)
-
-Dockerização da aplicação
 
 Deploy em ambiente cloud
 
