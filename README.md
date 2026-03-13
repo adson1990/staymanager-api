@@ -211,6 +211,13 @@ CI/CD
 
 este projeto usa GitHub Actions para melhorar a qualidade do código
 
+Pipeline features:
+
+. Testes automatizados a cada pull request
+. Validação do Maven build
+. Dependencia de cache adicionada para build mais rápida
+. Proteção da brantch main com required status check
+
 ▶️ Como Executar o Projeto
 1️⃣ Clone o repositório
 git clone https://github.com/adson1990/staymanager-api.git
