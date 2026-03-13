@@ -207,6 +207,10 @@ Spring Boot API (Docker)
   v
 PostgreSQL (Docker)
 
+CI/CD
+
+este projeto usa GitHub Actions para melhorar a qualidade do código
+
 ▶️ Como Executar o Projeto
 1️⃣ Clone o repositório
 git clone https://github.com/adson1990/staymanager-api.git
@@ -241,6 +245,8 @@ http://localhost:8080/swagger-ui.html
 📌 Próximos Passos
 
 Melhorias planejadas para evolução do projeto:
+
+Uso de GitHub Flow + Pull Request + pipeline
 
 Deploy em ambiente cloud
 
