@@ -216,7 +216,8 @@ Pipeline features:
 . Testes automatizados a cada pull request
 . Validação do Maven build
 . Dependencia de cache adicionada para build mais rápida
-. Proteção da brantch main com required status check
+. Proteção da branch main com required status check
+. Docker image build
 
 ▶️ Como Executar o Projeto
 1️⃣ Clone o repositório
